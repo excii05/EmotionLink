@@ -4,6 +4,9 @@ import numpy as np
 from deepface import DeepFace
 from collections import deque
 
+# source ~/deepface-env/bin/activate
+# python /Users/tim/Documents/Arduino/BoD_FP/face_recognition.py
+
 # ESP32-CAM IP
 url = "http://172.20.10.10/capture"
 
