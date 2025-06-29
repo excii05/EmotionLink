@@ -4,6 +4,9 @@ import numpy as np
 from deepface import DeepFace
 from collections import deque
 
+# source ~/deepface-env/bin/activate
+# python /Users/tim/Documents/Arduino/BoD_FP/face_recognition.py
+
 # Kameraquelle wählen
 use_esp_cam = False
 esp_url = "http://172.20.10.10/capture"
@@ -144,6 +147,13 @@ while True:
         # Emotion glätten & anzeigen
         if emotion_history:
             smoothed_emotion = max(set(emotion_history), key=emotion_history.count)
+
+            # Emotion per HTTP an ESP32 senden
+            try:
+                requests.get(f"http://172.20.10.10/emotion?value={smoothed_emotion}", timeout=1)
+            except:
+                print("⚠️ Emotion konnte nicht an den Arduino gesendet werden")
+
             cv2.putText(img, f"Emotion: {smoothed_emotion}", (10, 30),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
 
